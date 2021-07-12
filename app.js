@@ -8,13 +8,48 @@ const input = document.getElementById("input");
 // const element =  document.getElementById("element");
 
 //classes name
-const CHECK = "fas fa-check-circle ";
-const UNCHECK ="far fa-circle";
+const CHECK = "fa-check-circle ";
+const UNCHECK ="fa-circle";
 const LINE_THROUGH = "lineThrough";
 
-//Variable
-let LIST= []
-, id = 0;
+let LIST, id;
+
+let data = localStorage.getItem("TODO");
+
+if(data){
+    LIST = JSON.parse(data);
+    id = LIST.length;
+    loadList(LIST);
+}else{
+
+    LIST = [];
+    id = 0;
+}
+function loadList(array){
+    array.forEach(function(item){
+        addToDo(item.name, item.id, item.done,item.trash);
+    });
+
+    
+}
+
+clear.addEventListener("click",function(){
+    localStorage.clear();
+    location.reload();
+});
+
+
+
+localStorage.setItem("TODO", JSON.stringify(LIST));
+
+
+const options = {weekday: "long", month:"short",day:"numeric"};
+const today = new Date();
+
+dateElement.innerHTML = today.toLocaleDateString("en-US",options);
+
+
+
 
 
 
@@ -31,14 +66,15 @@ let LIST= []
 
 
 function addToDo(toDo,id, done, trash){
-    if (trash){return;}
+
+    if (trash){return; }
     
     const DONE = done ? CHECK : UNCHECK;
     const LINE = done ? LINE_THROUGH : "";
 const item = `<li class="item">
               <i class="far ${DONE} co" job ="complete" id="${id}"></i>
               <p class="text ${LINE}">${toDo}</p>
-              <i class="far fa-trash-alt" job="delete" id="${id}"></i>
+              <i class="far fa-trash-alt de" job="delete" id="${id}"></i>
              </li>`;
 
 const position = "beforeend";
@@ -51,9 +87,9 @@ list.insertAdjacentHTML(position,item);
 
 //add an item to the list
 
-document.addEventListener("keyup",function(even){
+document.addEventListener("keyup",function(event){
 if(event.keyCode == 13){
-    const Todo = input.value;
+    const toDo = input.value;
     
 
     //if input isn't empty
@@ -66,6 +102,16 @@ if(event.keyCode == 13){
             done : false,
             trash : false
         });
+
+
+      localStorage.setItem("TODO", JSON.stringify(LIST));
+
+
+        
+
+
+
+
         id++;
     }
     input.value = "";
@@ -94,7 +140,22 @@ function removeToDo(element){
 }
 
 //target the items dynamically
-list.addEventListener
+list.addEventListener("click",function(event){
+    const element = event.target;
+    const elementJob = element.attributes.job.value;
+
+    if(elementJob == "complete"){
+        completeToDo(element);
+    }else if(elementJob == "delete"){
+        removeToDo(element);
+
+    }
+
+localStorage.setItem("TODO", JSON.stringify(LIST));
+
+
+
+});
 
 
 

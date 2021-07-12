@@ -9,7 +9,6 @@
       crossorigin="anonymous"
     ></script>
     <link rel="stylesheet" href="style.css" />
-    <script src="app.js"></script>
     <title>Todo List</title>
   </head>
   <body>
@@ -23,16 +22,18 @@
       <div class="content">
         <ul id="list">
           <li class="item">
-            <i class="far fa-circle" aria-hidden="true"></i>
+            <i class="far fa-circle co" job="complete" id="0"></i>
             <p class="text">Drink Coffe</p>
-            <i class="far fa-trash-alt"></i>
+            <i class="far fa-trash-alt de" job="delete" id="0"></i>
           </li>
         </ul>
       </div>
-      <div class="add-item">
+      <div class="add-to-do">
         <i class="fas fa-plus-circle"></i>
         <input type="text" name="text" id="input" placeholder="Add a to-do" />
       </div>
     </div>
+
+    <script src="app.js"></script>
   </body>
 </html>
